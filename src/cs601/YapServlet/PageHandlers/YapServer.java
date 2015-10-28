@@ -12,18 +12,25 @@ public class YapServer
 {
 	public static void main(String[] args) throws Exception 
 	{
-        Server server = new Server(8080);
-        ServletContextHandler servhandler = new ServletContextHandler(ServletContextHandler.SESSIONS);        
-        server.setHandler(servhandler);
-        servhandler.addServlet(Home.class, "/yap");
-        servhandler.addServlet(SignUp.class, "/signup");
-        servhandler.addServlet(SignIn.class, "/signin");
-        servhandler.addServlet(LogOut.class, "/logout");
-        servhandler.addServlet(About.class, "/about");
-        servhandler.addServlet(Contact.class, "/contact");
-        servhandler.addServlet(MyProfile.class, "/myProfile");
-        server.setHandler(servhandler);
-        server.start();
-        server.join();
+		if(args.length==1)
+		{
+			Server server = new Server(Integer.parseInt(args[0]));
+	        ServletContextHandler servhandler = new ServletContextHandler(ServletContextHandler.SESSIONS);        
+	        server.setHandler(servhandler);
+	        servhandler.addServlet(Home.class, "/yap");
+	        servhandler.addServlet(SignUp.class, "/signup");
+	        servhandler.addServlet(SignIn.class, "/signin");
+	        servhandler.addServlet(LogOut.class, "/logout");
+	        servhandler.addServlet(About.class, "/about");
+	        servhandler.addServlet(Contact.class, "/contact");
+	        servhandler.addServlet(MyProfile.class, "/myProfile");
+	        server.setHandler(servhandler);
+	        server.start();
+	        server.join();
+		}
+		else
+		{
+			System.err.println("Please pass the server port number in the command line argument; For example: java -jar YapServer 10000, where 10000 is the <Port>");
+		}
 	}
 }

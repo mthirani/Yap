@@ -1,0 +1,14 @@
+BusinessTable:
+BusinessID,City,BusinessName,Neighbours,Longitude,State,Latitude,Address
+CREATE TABLE BusinessDataSet (businessId VARCHAR(200), city VARCHAR(100),busName VARCHAR(100),neighbours VARCHAR(200),longitude DOUBLE,state VARCHAR(10),latitude DOUBLE,address VARCHAR(500),busType VARCHAR(100));
+PRIMARY KEY: businessId (Combination Of busName,longitude,latitude)
+
+UserTable:
+FunnyVotes,UseFulVotes,CoolVotes,UserID,UserName,Password
+CREATE TABLE UserDataSet (funnyVotes INT, usefulVotes INT,coolVotes INT,userId VARCHAR(200),userName VARCHAR(200),password VARCHAR(200),address VARCHAR(500),name VARCHAR(200));
+PRIMARY KEY: userId (Same as EmailId entered by user)
+
+ReviewTable:
+FunnyVotes,UsefulVotes,CoolVotes,UserID,ReviewID,Stars,Date,Text,BusinessID
+CREATE TABLE ReviewDataSet (funnyVotes INT, usefulVotes INT,coolVotes INT,userId VARCHAR(200),reviewId VARCHAR(500),stars INT,revwDate DATE,review VARCHAR(2000),businessId VARCHAR(200));
+PRIMARY KEY: reviewId (Combination Of businessId,userId,revwDate)
