@@ -15,4 +15,4 @@ For example: http://localhost:10000/yap
 
 Sample look of the Yap web-page has been provided in the web-output folder
 
-NOTE: Make sure you change the MySQL Connection parameter accordingly to get the DB connection.
+NOTE: Make sure you change the MySQL Connection parameter accordingly to get the DB connection. Also LoadDatabase folder 3 different scripts (sample java-arrays to load the 3 tables in DB) to make the task easier for initial purpose if you do not want to load the files into the DB right now.
