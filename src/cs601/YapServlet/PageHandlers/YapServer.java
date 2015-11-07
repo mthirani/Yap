@@ -15,8 +15,7 @@ public class YapServer
 		if(args.length==1)
 		{
 			Server server = new Server(Integer.parseInt(args[0]));
-	        ServletContextHandler servhandler = new ServletContextHandler(ServletContextHandler.SESSIONS);        
-	        server.setHandler(servhandler);
+	        ServletContextHandler servhandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
 	        servhandler.addServlet(Home.class, "/yap");
 	        servhandler.addServlet(SignUp.class, "/signup");
 	        servhandler.addServlet(SignIn.class, "/signin");
@@ -24,13 +23,14 @@ public class YapServer
 	        servhandler.addServlet(About.class, "/about");
 	        servhandler.addServlet(Contact.class, "/contact");
 	        servhandler.addServlet(MyProfile.class, "/myProfile");
+	        servhandler.addServlet(Reviews.class, "/yapReviews");
 	        server.setHandler(servhandler);
 	        server.start();
 	        server.join();
 		}
 		else
 		{
-			System.err.println("Please pass the server port number in the command line argument; For example: java -jar YapServer 10000, where 10000 is the <Port>");
+			System.err.println("Please pass the server port number in the command line argument; For example: java -jar YapServer.jar 10000, where 10000 is the <Port>");
 		}
 	}
 }

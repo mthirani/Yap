@@ -111,7 +111,7 @@ public class YapServlet extends BaseServlet
 	    				+ "<li class=" + contactActive + "><a href=\"/contact\">Contact Us</a></li>"
 	    			+ "</ul>"
 	    			+ "<ul class=\"nav navbar-nav navbar-right\">"
-	    				+ "<li class=" + userActive + "><a class=\"dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"glyphicon glyphicon-user\"></span>Welcome " + name +" <span class=\"caret\"></span></a>"
+	    				+ "<li class=" + userActive + "><a class=\"dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"glyphicon glyphicon-user\"></span> Welcome " + name +" <span class=\"caret\"></span></a>"
 	    				+ "<ul class=\"dropdown-menu\"><li><a href=\"/myProfile\">My Profile</a></li></ul></li>"
 	    				+ "<li class=" + logoutActive + "><a href=\"/logout\"><span class=\"glyphicon glyphicon-log-out\"></span> LogOut</a></li>"
 	    			+ "</ul>"

@@ -17,10 +17,10 @@ import cs601.YapServlet.PageHandlers.UserInfo;
  */
 public class ExecuteSQLQueries extends JDBCConnection
 {	
-	private final String jdbcURL="jdbc:mysql://localhost:3306/";
-	private final static String user="mthirani";
-	private final static String pass="#Rpgsmn421#";
-	private final static String database="yap";
+	private final String jdbcURL="jdbc:mysql://sql.cs.usfca.edu:3306/";	//localhost
+	private final static String user="user52";							//mthirani
+	private final static String pass="user52";							//#Rpgsmn421#
+	private final static String database="user52";						//yap
 	
 	public ExecuteSQLQueries()
 	{
@@ -41,7 +41,34 @@ public class ExecuteSQLQueries extends JDBCConnection
 	}
 	
 	/**
-	 * Returns true or false depending on the user information stored in database or not
+	 * Returns the user Id for the user information stored in database
+	 * @param String
+	 * @return String
+	 * @throws SQLException
+	 */
+	public synchronized String getUserId(String sqlQuery) throws SQLException
+	{
+		Connection con=connection(jdbcURL);
+		Statement stmt=con.createStatement();
+		ResultSet result=stmt.executeQuery(sqlQuery);
+		try
+		{
+			if(result.next())
+			{
+				return result.getString("userId");
+			}
+			else
+			{
+				return null;
+			}
+		}finally
+		{
+			con.close();
+		}	
+	}
+	
+	/**
+	 * Returns true or false depending on the information stored in database or not
 	 * @param String
 	 * @return boolean
 	 * @throws SQLException
@@ -64,7 +91,7 @@ public class ExecuteSQLQueries extends JDBCConnection
 		}finally
 		{
 			con.close();
-		}	
+		}		
 	}
 	
 	/**
@@ -112,21 +139,31 @@ public class ExecuteSQLQueries extends JDBCConnection
 	 * @return StoreBusinessInfo
 	 * @throws SQLException
 	 */
-	public synchronized StoreBusinessInfo getQueryBusinesses(String sqlQuery) throws SQLException
+	public synchronized StoreBusinessInfo getQueryBusinesses(String sqlQuery, String review) throws SQLException
 	{
 		StoreBusinessInfo busInfo=new StoreBusinessInfo();
 		ArrayList<BusinessInfo> businesses=new ArrayList<BusinessInfo>();
 		Connection con=connection(jdbcURL);
 		Statement stmt=con.createStatement();
 		ResultSet result=stmt.executeQuery(sqlQuery);
+		if(result.next())
+		{
+			result.previous();
+		}
+		else
+		{
+			return null;
+		}
 		try
 		{			
 			while(result.next())
 			{
-				businesses.add(new BusinessInfo(result.getString("busName"), result.getString("busType"), result.getString("businessId"), result.getString("city"), result.getString("state"), result.getString("address")));
+				businesses.add(new BusinessInfo(result.getString("busName"), result.getString("busType"), result.getString("businessId"), result.getString("city"), result.getString("state"), result.getString("address"), result.getDouble("latitude"), result.getDouble("longitude")));
 			}
 			ArrayList<String> users=new ArrayList<String>();
 			ArrayList<String> reviews=new ArrayList<String>();
+			ArrayList<String> revwDates=new ArrayList<String>();
+			ArrayList<Integer> stars=new ArrayList<Integer>();
 			for(BusinessInfo busStore: businesses)
 			{
 				String queryBusId="SELECT AVG(stars) FROM reviewdataset WHERE businessId=\"" + busStore.getBusinessId() + "\";";
@@ -134,25 +171,41 @@ public class ExecuteSQLQueries extends JDBCConnection
 				ResultSet result1=stmt1.executeQuery(queryBusId);
 				result1.next();
 				double avgRating=result1.getDouble(1);
-				queryBusId="SELECT review,userName,stars FROM reviewdataset,userdataset WHERE businessId=\"" + busStore.getBusinessId() + "\" AND userdataset.userId=reviewdataset.userId;";
+				if(review.equals(""))
+				{
+					queryBusId="SELECT review,userName,stars,revwDate FROM reviewdataset,userdataset WHERE businessId=\"" + busStore.getBusinessId() + "\" AND userdataset.userId=reviewdataset.userId;";
+				}
+				else
+				{
+					queryBusId="SELECT review,userName,stars,revwDate FROM reviewdataset,userdataset WHERE businessId=\"" + busStore.getBusinessId() + "\" AND review like \"%" + review + "%\" AND userdataset.userId=reviewdataset.userId;";
+				}
 				Statement stmt2=con.createStatement();
 				ResultSet result2=stmt2.executeQuery(queryBusId);
 				if(result2.next())
 				{
 					users.add(result2.getString("userName"));
 					reviews.add(result2.getString("review"));
+					revwDates.add(result2.getString("revwDate"));
+					stars.add(result2.getInt("stars"));
 					while(result2.next())
 					{
 						users.add(result2.getString("userName"));
 						reviews.add(result2.getString("review"));
+						revwDates.add(result2.getString("revwDate"));
+						stars.add(result2.getInt("stars"));
 					}
 				}
+				
 				busStore.addAvgRating(avgRating);
 				busStore.addReviews(reviews);
 				busStore.addUsers(users);
+				busStore.addRating(stars);
+				busStore.addReviewDate(revwDates);
 				busInfo.addBusiness(busStore.getBusinessId(), busStore);
 				users.clear();
 				reviews.clear();
+				stars.clear();
+				revwDates.clear();
 			}
 			
 			return busInfo;

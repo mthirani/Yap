@@ -35,7 +35,7 @@ public class SignUp extends YapServlet
 			
 			return;
 		}
-		String javaScriptFormValidation="<script>function validateForm() {var g = document.forms[\"signUp\"][\"yourname\"].value;if (g.length > 200) {alert(\"Your first and last name must be within 200 characters. Please check and try again.\");return false;}var x = document.forms[\"signUp\"][\"username\"].value;if (x.length > 200) {alert(\"Your username must be within 200 characters. Please check and try again.\");return false;} var y = document.forms[\"signUp\"][\"email\"].value;if (y.length > 200) {alert(\"Your e-mail must be within 200 characters. Please check and try again.\");return false;}var z = document.forms[\"signUp\"][\"addr\"].value;if (z.length > 500) {alert(\"Your address must be within 500 characters. Please check and try again.\");return false;}var a = document.forms[\"signUp\"][\"pwd1\"].value;if (a.length > 200 || a.length < 8) {alert(\"Your password must be within the range of 8-200 characters. Please check and try again.\");return false;}var b = document.forms[\"signUp\"][\"pwd2\"].value;if (a!=b) {alert(\"Your password does not matches. Please check and try again.\");return false;}}</script>";
+		String javaScriptFormValidation="<script>function validateForm() {var g = document.forms[\"signUp\"][\"yourname\"].value;if (g.length > 200) {alert(\"Your first and last name must be within 200 characters. Please check and try again.\");return false;}var x = document.forms[\"signUp\"][\"username\"].value;if (x.length > 200) {alert(\"Your username must be within 200 characters. Please check and try again.\");return false;} var y = document.forms[\"signUp\"][\"email\"].value;if (y.length > 100) {alert(\"Your e-mail Id should be within 100 characters. Please check and try again.\");return false;}var z = document.forms[\"signUp\"][\"addr\"].value;if (z.length > 500) {alert(\"Your address must be within 500 characters. Please check and try again.\");return false;}var a = document.forms[\"signUp\"][\"pwd1\"].value;if (a.length > 200 || a.length < 8) {alert(\"Your password must be within the range of 8-200 characters. Please check and try again.\");return false;}var b = document.forms[\"signUp\"][\"pwd2\"].value;if (a!=b) {alert(\"Your password do not matches. Please check and try again.\");return false;}}</script>";
 		String header=getHeader("Sign Up in Yap") + javaScriptFormValidation + getEndHeader();
 		response.setStatus(HttpServletResponse.SC_OK);
 		response.setContentType("text/html");
@@ -99,6 +99,42 @@ public class SignUp extends YapServlet
 		response.setContentType("text/html");
 		out.println(header);
 		String body="";
+		if(request.getParameter("yourname").length() > 200)
+		{
+			body=getBodyNavigationBar("Sign Up in Yap is a great idea!", "SignUp") + "<div class=\"alert alert-danger container\"><strong><center>Sorry, Your First and Last name must be within 200 characters. Please check and try again.</strong></center></div>";
+			out.println(footer(body));
+			return;
+		}
+		if(request.getParameter("username").length() > 200)
+		{
+			body=getBodyNavigationBar("Sign Up in Yap is a great idea!", "SignUp") + "<div class=\"alert alert-danger container\"><strong><center>Sorry, UserName must be within 200 characters. Please check and try again.</strong></center></div>";
+			out.println(footer(body));
+			return;
+		}
+		if(request.getParameter("email").length() > 100)
+		{
+			body=getBodyNavigationBar("Sign Up in Yap is a great idea!", "SignUp") + "<div class=\"alert alert-danger container\"><strong><center>Sorry, Your Email-Id must be within 200 characters. Please check and try again.</strong></center></div>";
+			out.println(footer(body));
+			return;
+		}
+		if(request.getParameter("pwd1").length() < 8 || request.getParameter("pwd1").length() > 200)
+		{
+			body=getBodyNavigationBar("Sign Up in Yap is a great idea!", "SignUp") + "<div class=\"alert alert-danger container\"><strong><center>Sorry, Your password must be within the range of 8-200 characters. Please check and try again.</strong></center></div>";
+			out.println(footer(body));
+			return;
+		}
+		if(!request.getParameter("pwd1").equals(request.getParameter("pwd2")))
+		{
+			body=getBodyNavigationBar("Sign Up in Yap is a great idea!", "SignUp") + "<div class=\"alert alert-danger container\"><strong><center>Sorry, Your password do not matches. Please check and try again.</strong></center></div>";
+			out.println(footer(body));
+			return;
+		}
+		if(request.getParameter("addr").length() > 500)
+		{
+			body=getBodyNavigationBar("Sign Up in Yap is a great idea!", "SignUp") + "<div class=\"alert alert-danger container\"><strong><center>Sorry, Your address must be within 500 characters. Please check and try again.</strong></center></div>";
+			out.println(footer(body));
+			return;
+		}
 		String sqlQuery="SELECT userId FROM userdataset WHERE userId=\"" + request.getParameter("email") + "\";";
 		String sqlQueryUser="SELECT userName FROM userdataset WHERE userName=\"" + request.getParameter("username") + "\";";
 		try 

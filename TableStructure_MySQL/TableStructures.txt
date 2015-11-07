@@ -1,14 +1,14 @@
 BusinessTable:
 BusinessID,City,BusinessName,Neighbours,Longitude,State,Latitude,Address
-CREATE TABLE BusinessDataSet (businessId VARCHAR(200), city VARCHAR(100),busName VARCHAR(100),neighbours VARCHAR(200),longitude DOUBLE,state VARCHAR(10),latitude DOUBLE,address VARCHAR(500),busType VARCHAR(100));
+CREATE TABLE businessdataset (businessId VARCHAR(100) NOT NULL PRIMARY KEY, city VARCHAR(100) NOT NULL,busName VARCHAR(50) NOT NULL,neighbours VARCHAR (200),longitude DOUBLE NOT NULL,state VARCHAR(10) NOT NULL,latitude DOUBLE NOT NULL,address VARCHAR(500) NOT NULL,busType VARCHAR(100) NOT NULL);
 PRIMARY KEY: businessId (Combination Of busName,longitude,latitude)
 
 UserTable:
 FunnyVotes,UseFulVotes,CoolVotes,UserID,UserName,Password
-CREATE TABLE UserDataSet (funnyVotes INT, usefulVotes INT,coolVotes INT,userId VARCHAR(200),userName VARCHAR(200),password VARCHAR(200),address VARCHAR(500),name VARCHAR(200));
+CREATE TABLE userdataset (funnyVotes INT NOT NULL, usefulVotes INT NOT NULL,coolVotes INT NOT NULL,userId VARCHAR(100) NOT NULL PRIMARY KEY,userName VARCHAR(200) NOT NULL,password VARCHAR(200) NOT NULL,address VARCHAR(500) NOT NULL,name VARCHAR(200) NOT NULL);
 PRIMARY KEY: userId (Same as EmailId entered by user)
 
 ReviewTable:
 FunnyVotes,UsefulVotes,CoolVotes,UserID,ReviewID,Stars,Date,Text,BusinessID
-CREATE TABLE ReviewDataSet (funnyVotes INT, usefulVotes INT,coolVotes INT,userId VARCHAR(200),reviewId VARCHAR(500),stars INT,revwDate DATE,review VARCHAR(2000),businessId VARCHAR(200));
+CREATE TABLE reviewdataset (funnyVotes INT NOT NULL, usefulVotes INT NOT NULL,coolVotes INT NOT NULL,userId VARCHAR(100) NOT NULL,reviewId VARCHAR(250) NOT NULL PRIMARY KEY,stars INT NOT NULL,revwDate DATE NOT NULL,review VARCHAR(200) NOT NULL,businessId VARCHAR(100) NOT NULL);
 PRIMARY KEY: reviewId (Combination Of businessId,userId,revwDate)

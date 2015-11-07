@@ -30,12 +30,28 @@ public class UserInfo
 	}
 	
 	/**
+	 * Updates the full name of the user
+	 */
+	public synchronized void updateName(String fullname)
+	{
+		name=fullname;
+	}
+	
+	/**
 	 * Returns the name of the user
 	 * @return String
 	 */
 	public synchronized String getName()
 	{
 		return name;
+	}
+	
+	/**
+	 * Updates the address of the user
+	 */
+	public synchronized void updateAddress(String adrs)
+	{
+		address=adrs;
 	}
 	
 	/**
@@ -48,12 +64,28 @@ public class UserInfo
 	}
 	
 	/**
+	 * Updates the user name of the user
+	 */
+	public synchronized void updateUser(String user)
+	{
+		username=user;
+	}
+	
+	/**
 	 * Returns the user name of the user
 	 * @return String
 	 */
 	public synchronized String getUser()
 	{
 		return username;
+	}
+	
+	/**
+	 * Updates the email of the user
+	 */
+	public synchronized void updateEmail(String emailId)
+	{
+		email=emailId;
 	}
 	
 	/**
@@ -94,6 +126,7 @@ public class UserInfo
 	
 	/**
 	 * Returns the UserInfo object if HttpSession stores in it
+	 * The below session validation code in this function is copyright from "http://www.javamex.com/tutorials/servlets/session_api.shtml"
 	 * @param HttpServletRequest
 	 * @return UserInfo
 	 */

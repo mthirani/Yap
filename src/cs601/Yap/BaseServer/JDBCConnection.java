@@ -36,7 +36,7 @@ public class JDBCConnection
 		}
 		catch (Exception e) 
 		{
-			System.err.println("Can't find driver");
+			e.printStackTrace();
 			System.exit(1);
 		}
 		String jdbcString=urlString + database;
