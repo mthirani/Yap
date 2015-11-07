@@ -13,5 +13,6 @@ For example: java -jar YapServer 10000, where 10000 is the <Port>
 The web-server has been started now and you can get the web-page by typing the url: http://<your_machine_node>:<server_port>/yap. 
 For example: http://localhost:10000/yap
 
-
 Sample look of the Yap web-page has been provided in the web-output folder
+
+NOTE: Make sure you change the MySQL Connection parameter accordingly to get the DB connection.
