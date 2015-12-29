@@ -24,6 +24,8 @@ public class YapServer
 	        servhandler.addServlet(Contact.class, "/contact");
 	        servhandler.addServlet(MyProfile.class, "/myProfile");
 	        servhandler.addServlet(Reviews.class, "/yapReviews");
+	        servhandler.addServlet(CreateBusiness.class, "/createBusiness");
+	        servhandler.addServlet(WriteReview.class, "/postReview");
 	        server.setHandler(servhandler);
 	        server.start();
 	        server.join();

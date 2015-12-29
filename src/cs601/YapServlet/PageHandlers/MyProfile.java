@@ -29,7 +29,7 @@ public class MyProfile extends YapServlet
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			response.setContentType("text/html");
 			out.println(header);
-			String body="<html><body><div class=\"alert alert-danger container\"><strong><center>You are requesting an invalid page.</strong></center></div></body></html>";
+			String body="<html><body><div class=\"alert alert-danger container\"><strong><center>You are not logged in. First log in to Yap.</strong></center></div></body></html>";
 			out.println(body);
 			logger.log(Level.WARNING, "MyProfile Page cannot be found due to passing of invalid parameters in URL");
 			
@@ -159,7 +159,7 @@ public class MyProfile extends YapServlet
 	{
 		Logger logger=Logger.getLogger(MyProfile.class.getName());
 		PrintWriter out=response.getWriter();
-		if(UserInfo.getCurrentUser(request)==null)
+		if(UserInfo.getCurrentUser(request)==null || request.getParameterMap().size() > 1 || request.getParameterMap().size() ==0)
 		{
 			String header=getHeader("Page Not Found") + getEndHeader();
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -178,6 +178,18 @@ public class MyProfile extends YapServlet
 		String address="<h4><div class=\"row\"><div class=\"col-xs-2\"><b>Address: </b></div><div class=\"col-xs-8\">" + UserInfo.getCurrentUser(request).getAddress() + " <a href=\"/myProfile?address=" + UserInfo.getCurrentUser(request).getAddress() + "\" title=\"Change My Address\" data-toggle=\"tooltip\" data-placement=\"right\" data-trigger=\"hover\"><span class=\"glyphicon glyphicon-pencil\"></span></a></div></div></h4></p>";
 		if(request.getParameter("yourname")!=null)
 		{
+			if(request.getParameter("yourname").length() > 200)
+			{
+				name="<div class=\"row\"><div class=\"col-xs-2\"><h4><b>Name: </b></h4></div>"
+						 + "<form class=\"form-horizontal\" name=\"editProfile\" role=\"form\" method=\"POST\" action=\"/myProfile\">"
+						 + "<div class=\"form-group\">"
+						 + "<div class=\"col-xs-3\"><input type=\"text\" class=\"form-control\" name=\"yourname\" value=\"" + request.getParameter("yourname") + "\" maxlength=\"200\" required></div>"
+						 + "<button type=\"submit\" class=\"btn btn-danger\"><span class=\"glyphicon glyphicon-floppy-save\"></span></button>"
+						 + "</div>"
+						 + "</form></div>";
+				changeRequest(request, response, out, name, user, email, address, "Your name is exceeding 200 characters ! Please check and try again", "NotChanged");
+				return;
+			}
 			String sqlQuery="UPDATE userdataset SET name=\"" + request.getParameter("yourname") + "\" WHERE userId=\"" + userInfo.getEmail() + "\";";
 			try 
 			{
@@ -193,6 +205,18 @@ public class MyProfile extends YapServlet
 		}
 		else if(request.getParameter("address")!=null)
 		{
+			if(request.getParameter("address").length() > 500)
+			{
+				address="<div class=\"row\"><div class=\"col-xs-2\"><h4><b>Address: </b></h4></div>"
+						 + "<form class=\"form-horizontal\" name=\"editProfile\" role=\"form\" method=\"POST\" action=\"/myProfile\">"
+						 + "<div class=\"form-group\">"
+						 + "<div class=\"col-xs-3\"><input type=\"text\" class=\"form-control\" name=\"address\" value=\"" + request.getParameter("address") + "\" maxlength=\"500\" required></div>"
+						 + "<button type=\"submit\" class=\"btn btn-danger\"><span class=\"glyphicon glyphicon-floppy-save\"></span></button>"
+						 + "</div>"
+						 + "</form></div>";
+				changeRequest(request, response, out, name, user, email, address, "Your address is exceeding 500 characters ! Please check and try again", "NotChanged");
+				return;
+			}
 			String sqlQuery="UPDATE userdataset SET address=\"" + request.getParameter("address") + "\" WHERE userId=\"" + userInfo.getEmail() + "\";";
 			try 
 			{
@@ -208,6 +232,18 @@ public class MyProfile extends YapServlet
 		}
 		else if(request.getParameter("username")!=null)
 		{
+			if(request.getParameter("username").length() > 200)
+			{
+				user="<div class=\"row\"><div class=\"col-xs-2\"><h4><b>Username: </b></h4></div>"
+						 + "<form class=\"form-horizontal\" name=\"editProfile\" role=\"form\" method=\"POST\" action=\"/myProfile\">"
+						 + "<div class=\"form-group\">"
+						 + "<div class=\"col-xs-3\"><input type=\"text\" class=\"form-control\" name=\"username\" value=\"" + request.getParameter("username") + "\" maxlength=\"200\" required></div>"
+						 + "<button type=\"submit\" class=\"btn btn-danger\"><span class=\"glyphicon glyphicon-floppy-save\"></span></button>"
+						 + "</div>"
+						 + "</form></div>";
+				changeRequest(request, response, out, name, user, email, address, "Your username is exceeding 200 characters ! Please check and try again", "NotChanged");
+				return;
+			}
 			String sqlQuery="SELECT userId from userdataset WHERE username=\"" + request.getParameter("username") + "\";";
 			try 
 			{
@@ -248,8 +284,20 @@ public class MyProfile extends YapServlet
 				return;
 			}
 		}
-		else
+		else if(request.getParameter("email")!=null)
 		{
+			if(request.getParameter("email").length() > 100)
+			{
+				email="<div class=\"row\"><div class=\"col-xs-2\"><h4><b>Email Id: </b></h4></div>"
+						 + "<form class=\"form-horizontal\" name=\"editProfile\" role=\"form\" method=\"POST\" action=\"/myProfile\">"
+						 + "<div class=\"form-group\">"
+						 + "<div class=\"col-xs-3\"><input type=\"email\" class=\"form-control\" name=\"email\" value=\"" + request.getParameter("email") + "\" maxlength=\"100\" required></div>"
+						 + "<button type=\"submit\" class=\"btn btn-danger\"><span class=\"glyphicon glyphicon-floppy-save\"></span></button>"
+						 + "</div>"
+						 + "</form></div>";
+				changeRequest(request, response, out, name, user, email, address, "Your email is exceeding 100 characters ! Please check and try again.", "NotChanged");
+				return;
+			}
 			String sqlQuery="SELECT userId from userdataset WHERE userId=\"" + request.getParameter("email") + "\";";
 			try 
 			{
@@ -289,6 +337,11 @@ public class MyProfile extends YapServlet
 				sqlExceptionError(request, response, out, logger);
 				return;
 			}
+		}
+		else
+		{
+			errorMessage(response, out, logger);
+			return;
 		}
 	}
 	

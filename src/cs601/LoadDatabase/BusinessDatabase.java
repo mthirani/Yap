@@ -24,7 +24,8 @@ public class BusinessDatabase extends JDBCConnection
 	public static void main(String []args) throws SQLException 
 	{
 		//updateQuery();
-		insertQuery();
+		//insertQuery();
+		insertMoreBusinesses();
 	}
 
 	public static void updateQuery() throws SQLException
@@ -147,6 +148,56 @@ public class BusinessDatabase extends JDBCConnection
 				"Uncle Funky's Daughter",
 				"Walgreens",
 				"White Chappell"};
+		for(int i=0; i<busName.length; i++)
+		{
+			String businessId=busName[i]+longitude[i]+latitude[i];
+			String sqlQuery="INSERT INTO businessdataset (businessId,city,busName,neighbours,longitude,state,latitude,address,busType) VALUES(\"" + businessId + "\",\"" + city[i] + "\",\"" + busName[i] + "\",\"" + neighbours[i] + "\"," + longitude[i] + ",\"" + state[i] + "\"," + latitude[i] + ",\"" + address[i] + "\",\"" + busType[i] + "\");";
+			stmt.executeUpdate(sqlQuery);
+		}
+		con.close();
+	}
+	
+	public static void insertMoreBusinesses() throws SQLException
+	{
+		try
+		{
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		}
+		catch (Exception e) 
+		{
+			System.err.println("Can't find driver");
+			System.exit(1);
+		}
+		String jdbcString=jdbcURL + database;
+		Connection con=DriverManager.getConnection(jdbcString, user, pass);
+		Statement stmt=con.createStatement();
+		String []city={"San Diego",
+				"New York",
+				"La Jolla",
+				"Chapel Hill",
+				"Palo Alto",
+				"New York"};
+		String []neighbours={"","Harlem",
+							"",
+							"",
+							"",
+							"Morningside Heights"};
+		double []longitude={-117.2146218,-73.9569,-117.236132,-79.0219388,-122.1610427,-73.96433258};
+		String []state={"CA","NY","CA","NC","CA","NY"};
+		double []latitude={32.8796717,40.802885,32.870735,35.9068246,37.4402229,40.8070335};
+		String []address={"9555 Genesee Avenue San Diego, CA 92121",
+				"2101 Frederick Douglass Blvd Harlem New York, NY",
+				"8950 Villa La Jolla Dr Ste B214 La Jolla, CA 92037",
+				"1114 Environ Way Chapel Hill, NC 27517",
+				"795 El Camino Real Palo Alto, CA 94301",
+				"2922 Broadway Morningside Heights New York,NY"};
+		String busType[]={"Rental Apartments","Realty Traders","Clinic","Departmental Store","Clinic","Bookstore"};
+		String busName[]={"Canyon Park Apartments",
+				"Bohemia Realty Group",
+				"Practical Recovery",
+				"fab'rik",
+				"McCaffrey Michael R MD",
+				"Barnes and Noble - Columbia University Bookstore"};
 		for(int i=0; i<busName.length; i++)
 		{
 			String businessId=busName[i]+longitude[i]+latitude[i];

@@ -100,14 +100,14 @@ public class Home extends YapServlet
 			return;
 		}
 		String header=getHeader("Yap - Welcomes You") 
-					  + "<style>a:link{color:blue; background-color:transparent; text-decoration:none}a:hover{color:red; background-color:transparent; text-decoration:underline}</style>" 
+					  + "<style>a:link{color:blue; background-color:transparent; text-decoration:none}a:hover{color:red; background-color:transparent; text-decoration:underline}.wrapper {text-align: center;}</style>" 
 					  + "<script>$(document).ready(function(){$('[data-toggle=\"popover\"]').popover();});</script>"
 					  + getEndHeader();
 		
 		response.setStatus(HttpServletResponse.SC_OK);
 		response.setContentType("text/html");
 		out.println(header);
-		String defaultRes="<div style=\"background-color: rgb(0,139,139)\" class=\"container\"><div style=\"background-color: white\" class=\"well\"><div class=\"well\"><center><h4 class='text-danger'><strong>Yap is the best way to find great local businesses</strong></h4></center></div>"
+		String defaultRes="<div style=\"background-color: rgb(0,139,139)\" class=\"container\"><div style=\"background-color: white\" class=\"well\"><div class=\"well\"><center><h4 class='text-danger'><strong>Yap is the best way to find great local businesses</strong></h4></center><br/><div class=\"wrapper\"><form role=\"form\" action=\"createBusiness\" method=\"GET\"><button type=\"submit\" class=\"btn btn-danger\">Create Business</button></form></div></div>"
 				+ "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-primary\">Sort By </button><button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\"><span class=\"caret\"></span></button><ul class=\"dropdown-menu\"><li><a href=\"/yap?sortby=alphaAscending\"><span class=\"glyphicon glyphicon-sort-by-alphabet\"></span> BusinessName</a></li><li><a href=\"/yap?sortby=alphaDescending\"><span class=\"glyphicon glyphicon-sort-by-alphabet-alt\"></span> BusinessName</a></li><li><a href=\"/yap?sortby=ratingAscending\"><span class=\"glyphicon glyphicon-sort-by-attributes\"></span> Rating</a></li><li><a href=\"/yap?sortby=ratingDescending\"><span class=\"glyphicon glyphicon-sort-by-attributes-alt\"></span> Rating</a></li></ul></div></p>"
 				+ "<br/>"
 				+ getStoredBusiness()
@@ -165,7 +165,7 @@ public class Home extends YapServlet
 			return;
 		}
 		String header=getHeader("Yap - Welcomes You") 
-					+ "<style>a:link{color:blue; background-color:transparent; text-decoration:none}a:hover{color:blue; background-color:transparent; text-decoration:underline}#map{width: 300px;height: 200px;}</style>"
+					+ "<style>a:link{color:blue; background-color:transparent; text-decoration:none}a:hover{color:blue; background-color:transparent; text-decoration:underline}#map{width: 300px;height: 200px;}.wrapper{text-align: center;}</style>"
 					+ "<script src=\"https://maps.googleapis.com/maps/api/js\"></script>"
 					+ getEndHeader();
 		response.setStatus(HttpServletResponse.SC_OK);

@@ -48,7 +48,7 @@ public class BusinessInfo
 	{
 		public	int compare(BusinessInfo obj1, BusinessInfo obj2)
 		{
-			return obj1.getBusName().compareTo(obj2.getBusName());
+			return obj1.getBusName().compareToIgnoreCase(obj2.getBusName());
 		}
 	};
 	
@@ -59,7 +59,7 @@ public class BusinessInfo
 	{
 		public	int compare(BusinessInfo obj1, BusinessInfo obj2)
 		{
-			return obj2.getBusName().compareTo(obj1.getBusName());
+			return obj2.getBusName().compareToIgnoreCase(obj1.getBusName());
 		}
 	};
 	
@@ -269,7 +269,9 @@ public class BusinessInfo
 		builder.append("</p>");
 		builder.append("</div></div>");
 		builder.append("<div class=\"container\">");
+		builder.append("<button type=\"button\" class=\"btn btn-danger btn-sg\" data-toggle=\"modal\" data-target=\"#myModal\"><span class=\"glyphicon glyphicon-star\"></span> Write A Review</button>");
 		builder.append("</p>");
+		builder.append("<div class=\"modal fade\" id=\"myModal\" role=\"dialog\"><div class=\"modal-dialog\"><div class=\"modal-content\"><div class=\"modal-header\"><button type\"button\" class=\"close\" data-dismiss=\"modal\">&times;</button><h4 class=\"modal-title\"><div style=\"color:darkred\"><strong>Post your review</strong></div></h4></div><form class=\"form-horizontal\" name=\"reviewsection\" role=\"form\" action=\"/postReview\" method=\"POST\"><div class=\"modal-body\"><strong>Review: </strong><textarea class=\"form-control\" rows=\"4\" id=\"comment\" name=\"comment\" placeholder=\"Enter your comments (should be within 200 characters)\" maxlength=\"200\" required></textarea><br/><strong>Rating: </strong><select class=\"form-control\" name=\"rating\" id=\"rating\" required><option value=\"1\">1 (I Hate it)</option><option value=\"2\">2 (Not upto the mark)</option><option value=\"3\">3 (Ahh Ok)</option><option value=\"4\">4 (Nice to have this place!)</option><option value=\"5\">5 (Great! Will visit soon)</option></select></div><div class=\"modal-footer\"><div class=\"col-sm-1\"><button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button></div><div class=\"col-sm-11\"><button type=\"submit\" class=\"btn btn-danger\">Post</button></div></div></form></div></div></div>");
 		
 		return builder.toString();
 	}
@@ -303,7 +305,7 @@ public class BusinessInfo
 		}
 		else
 		{
-			builder.append("<div class=\"alert alert-info container\"><strong><center>There are no reviews yet for this business. Be the first one to review!</center></strong></div>");
+			builder.append("<div class=\"alert alert-warning container\"><strong><center>There are no reviews yet for this business. Be the first one to review!</center></strong></div>");
 		}
 		builder.append("</div>");
 		

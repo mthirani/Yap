@@ -95,7 +95,7 @@ public class Reviews extends YapServlet
 			return;
 		}
 		String header=getHeader("Yap - Welcomes You") 
-				+ "<style>a:link{color:blue; background-color:transparent; text-decoration:none}a:hover{color:blue; background-color:transparent; text-decoration:underline}#map{width: 300px;height: 200px;}</style>"
+				+ "<style>a:link{color:blue; background-color:transparent; text-decoration:none}a:hover{color:blue; background-color:transparent; text-decoration:underline}#map{width: 300px;height: 200px;}.wrapper{text-align: center;}</style>"
 				+ "<script src=\"https://maps.googleapis.com/maps/api/js\"></script>"
 				+ getEndHeader();
 		response.setStatus(HttpServletResponse.SC_OK);

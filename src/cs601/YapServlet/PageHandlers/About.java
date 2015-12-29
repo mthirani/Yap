@@ -67,6 +67,7 @@ public class About extends YapServlet
 				+ "<tr><td align=\"center\">5</td><td align=\"left\">Show n businesses per page</td><td align=\"left\">Provide pagination to allow a user to see some specific number of businesses per page and scroll to the next page.</td></tr>"
 				+ "<tr><td align=\"center\">5</td><td align=\"left\">Edit User Profile</td><td align=\"left\">Provide access to the user to update his/ her information in database.</td></tr>"
 				+ "<tr><td align=\"center\">10</td><td align=\"left\">Search</td><td align=\"left\">Allow a user to search reviews for particular phrases.</td></tr>"
+				+ "<tr><td align=\"center\">10</td><td align=\"left\">Add review</td><td align=\"left\">Allow a user to add a new review for a business. Unlike Yelp, allow a user to create a business if it does not already exist.</td></tr>"
 				+ "</tbody></table>"
 				+ "</div>";
 		
