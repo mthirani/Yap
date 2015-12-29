@@ -1,5 +1,5 @@
 # Yap
-It's a Yelp-like review site, called Yap! build upon a two-tier web application with a Java front end and a SQL backend. MySQL server has been used as a backend for storing the data in the relational database. 
+It's a Yelp-like review site, called Yap! build upon a two-tier web application using Bootstrap, Java and MySQL. MySQL server has been used as a backend for storing the data in the relational database. 
 This website is developed with the help of jetty web-server. It uses servlets to provide the dynamic web-page to the user. Bootstrap/ HTML and Javascript has been used as a front-end side for providing the presentation layer to the User. All the user/ business/ review information has been stored in the relational database using MySQL as a backend.
 
 1. Table Structures/ Primary Key for Storing the User, Business and Review Information has been provided in the folder: TableStructure_MySQL.
